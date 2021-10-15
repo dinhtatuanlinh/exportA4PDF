@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <!-- width: 595px; height: 842px; kích thước khổ a4 -->
+        <!-- margin: 100px 200px" để phân lề cho khổ a4 dùng margin -->
+        <div id="content" style="width: 595px; height: 842px; margin: 100px 200px">hello world!</div>
+        <script src="./jspdf.min.js"></script>
+        <script type="module" >
+            // thư viện jspdf dùng để export ra file pdf
+            let content = document.getElementById("content");
+            const doc = new jsPDF();
+            // dom content truyền vào để xác định vị trí muốn exports
+            doc.fromHTML(content, 0, 0);
+            doc.save("a4.pdf");
+        </script>
+    </body>
+</html>
