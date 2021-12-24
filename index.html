@@ -5,18 +5,98 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
+        <style>
+            #content {
+                font-size: 10px;
+                line-height: 15px;
+                background-color: #ccc;
+            }
+        </style>
     </head>
     <body>
         <!-- width: 595px; height: 842px; kích thước khổ a4 -->
         <!-- margin: 100px 200px" để phân lề cho khổ a4 dùng margin -->
-        <div id="content" style="width: 595px; height: 842px; margin: 100px 200px">hello world!</div>
+        <div
+            id="content"
+            style="width: 595px; height: 842px; margin: 50px 50px"
+        >
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis quis
+            ipsum elit. Sed vitae ipsum at tortor elementum tincidunt sit amet
+            sed neque. Suspendisse a metus facilisis, efficitur sapien vel,
+            maximus magna. Duis blandit sollicitudin tellus vitae finibus. Duis
+            ultricies urna quis ligula efficitur placerat. Donec pulvinar
+            egestas ultrices. Integer ac blandit massa. Fusce dignissim sapien
+            nec hendrerit pharetra. Quisque egestas consequat pretium. In
+            interdum in lacus eu feugiat. Sed nec odio pellentesque justo cursus
+            condimentum. Nunc a nibh id felis sollicitudin lobortis. Praesent
+            consequat vehicula massa ac auctor. Vestibulum elementum felis
+            dictum libero congue, congue vulputate elit suscipit. Praesent
+            luctus viverra arcu, nec pellentesque velit ultricies in. Proin erat
+            eros, tempor ac placerat eget, interdum nec ante. Vestibulum
+            tincidunt, risus a tempor rutrum, ante purus efficitur lorem, a
+            facilisis ante quam tempor orci. Nam accumsan est a nibh consequat
+            facilisis. Sed vitae nunc sit amet ex mollis varius sed a elit.
+            Fusce erat dolor, tincidunt semper quam vel, dignissim iaculis quam.
+            Sed tortor dolor, ultricies non malesuada nec, auctor interdum
+            metus. Integer facilisis volutpat cursus. Maecenas nunc nunc,
+            ultrices eu massa nec, maximus luctus urna. Integer eget libero sed
+            arcu condimentum suscipit nec in libero. Nullam efficitur, risus in
+            laoreet vestibulum, dui ex vehicula diam, ut tincidunt tellus velit
+            ac nisi. In bibendum justo in facilisis dignissim. Duis est nunc,
+            mollis sit amet pretium et, maximus eu risus. Pellentesque
+            pellentesque sit amet est pharetra volutpat. Integer ac interdum
+            ante. Ut finibus fermentum turpis pellentesque consequat. Mauris
+            tempor euismod pellentesque. Aenean aliquam ornare justo sit amet
+            commodo. Mauris scelerisque, augue eu facilisis malesuada, ex elit
+            dignissim sapien, non bibendum leo nunc vel mi. Integer vel
+            porttitor justo. Morbi fringilla viverra massa quis scelerisque.
+            Proin id vestibulum ex. Aenean sed nisi sollicitudin, pellentesque
+            sapien a, dictum erat. Proin quis mi iaculis, laoreet turpis quis,
+            elementum elit. Nunc ac imperdiet purus. Donec id enim eget augue
+            lacinia ornare. Morbi nisi orci, laoreet vitae justo blandit,
+            sodales maximus enim. Nunc suscipit ante vel sapien luctus placerat.
+            Curabitur venenatis pulvinar est, quis mollis orci pharetra at. Duis
+            sed condimentum ante. Proin tristique ligula sed libero mattis
+            ultrices. Nullam iaculis ex sit amet erat convallis, in sodales
+            libero ultricies. Suspendisse potenti. Integer non accumsan sapien.
+            Nam tincidunt ex quis enim congue, vel finibus ligula feugiat. Fusce
+            vel viverra purus. Duis cursus mauris massa, sed gravida purus
+            gravida eget. Praesent id nisi ac velit vulputate imperdiet vel non
+            nunc. Sed orci tortor, rutrum et euismod quis, porttitor id quam.
+            Morbi ac metus posuere, eleifend felis sit amet, vulputate ante.
+            Pellentesque eu varius quam. Cras eu tincidunt urna. Curabitur ut
+            consectetur justo, sit amet tristique lorem. Proin pretium, lacus
+            nec porttitor porta, ipsum libero fringilla mi, non tristique odio
+            nisi at dolor. Proin sagittis, nulla vel laoreet semper, odio nisi
+            cursus nunc, quis faucibus dolor est nec massa. Aenean volutpat
+            risus id aliquet bibendum. Nullam feugiat massa nec purus sagittis
+            bibendum. In bibendum malesuada accumsan. Pellentesque tellus felis,
+            ultricies eget tortor at, ornare porttitor turpis. Pellentesque
+            sagittis, massa non pulvinar aliquet, odio nisl ornare ipsum, vel
+            efficitur felis turpis et erat. Nullam lorem ante, porttitor vitae
+            mattis et, lobortis a nunc. Aliquam erat volutpat. Duis arcu massa,
+            rhoncus ac faucibus at, dictum nec sem. Aliquam lobortis, tellus
+            rutrum laoreet lobortis, eros sapien lobortis elit, a rhoncus erat
+            erat ut sem. Etiam ac nulla nec dui tempus fringilla non at quam.
+            Etiam gravida imperdiet fermentum.
+        </div>
         <script src="./jspdf.min.js"></script>
-        <script type="module" >
+        <script type="module">
+            
+            var lMargin = 15; //left margin in mm
+            var rMargin = 15; //right margin in mm
+            var pdfInMM = 210; // width of A4 in mm
             // thư viện jspdf dùng để export ra file pdf
             let content = document.getElementById("content");
-            const doc = new jsPDF();
+            console.log(content.innerHTML);
+            const doc = new jsPDF("p", "mm", "a4");
+            doc.setFontSize(13);
+            doc.setFont("Times-Roman")
+            let lines = doc.splitTextToSize(content.innerHTML, (pdfInMM-lMargin-rMargin));
+            console.log(lines);
+            doc.text(lMargin, 20, lines);
             // dom content truyền vào để xác định vị trí muốn exports
-            doc.fromHTML(content, 0, 0);
+            // doc.fromHTML(content, 0, 0);
             doc.save("a4.pdf");
         </script>
     </body>
